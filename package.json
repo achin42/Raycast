@@ -2,9 +2,9 @@
   "name": "raycast",
   "version": "1.0.0",
   "description": "Raycast algorithm helps you determine if a point lies inside a polygon",
-  "main": "Raycast.js",
+  "main": "raycast.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node raycast"
   },
   "keywords": [
     "Raycast"
