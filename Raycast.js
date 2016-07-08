@@ -20,11 +20,11 @@ function Edge(x1, y1, x2, y2) {
 }
 
 function isLatLngInside(latlngs, latlng) {
-    normalizeLongitudesAndProceed(latlngs, latlng);
+    return normalizeLongitudesAndProceed(latlngs, latlng);
 }
 
 function isPointInside(points, point) {
-    isPointInsideEdges(getEdgesFromPoints(points), point)
+    return isPointInsideEdges(getEdgesFromPoints(points), point)
 }
 
 module.exports = {
