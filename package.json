@@ -9,6 +9,13 @@
   "keywords": [
     "Raycast"
   ],
-  "author": "Achin",
+  "author": {
+    "name" : "Achin Kumar",
+    "email" : "talk.to.achin@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Infernus666/Raycast.git"
+  },
   "license": "ISC"
 }
