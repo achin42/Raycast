@@ -2,6 +2,8 @@
  * Created by Infernus on 08/07/16.
  */
 
+const VERTEX_ON_RAY_DIVERSION_COOFF = 100;
+
 function LatLng(latitude, longitude) {
     this.latitude = latitude;
     this.longitude = longitude;
@@ -109,15 +111,39 @@ function getPointFromLatlng(latlng) {
 function isPointInsideEdges(edges, point) {
     var intersectionCount = 0;
 
+    var isPointOnAnEdge = false;
     edges.forEach(function(edge) {
+        if(isPointOnLine(edge.startX, edge.startY, edge.endX, edge.endY, point)) isPointOnAnEdge = true;
         if(linesIntersect(edge.startX, edge.startY, edge.endX, edge.endY, point.x, point.y, Number.MAX_VALUE, Number.MAX_VALUE)) {
-            intersectionCount++;
+            if(isPointOnLine(point.x, point.y, Number.MAX_VALUE, Number.MAX_VALUE, new Point(edge.startX, edge.startY))
+            || isPointOnLine(point.x, point.y, Number.MAX_VALUE, Number.MAX_VALUE, new Point(edge.endX, edge.endY))) {
+                if(linesIntersect(edge.startX, edge.startY, edge.endX, edge.endY, point.x, point.y, Number.MAX_VALUE - VERTEX_ON_RAY_DIVERSION_COOFF, Number.MAX_VALUE - VERTEX_ON_RAY_DIVERSION_COOFF)) {
+                    intersectionCount++;
+                }
+            } else {
+                intersectionCount++;
+            }
         }
     });
+
+    if(isPointOnAnEdge) return true;
 
     return (intersectionCount % 2 != 0);
 }
 
+
+
+
+function isPointOnLine(ax, ay, bx, by, point) {
+    var EPSILON = 0.0000001;
+    var distance = dotLineLength(point.x, point.y, ax, ay, bx, by);
+    return distance < EPSILON;
+}
+
+function dotLineLength(x, y, x0, y0, x1, y1) {
+    var a = y0 - y1, b = x1 - x0, c = x0 * y1 - y0 * x1;
+    return Math.abs(a * x + b * y + c) / Math.sqrt(a * a + b * b);
+}
 
 
 
